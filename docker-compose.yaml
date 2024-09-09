@@ -1,0 +1,13 @@
+# docker-compose up -d
+# docker exec -it staffeli_nt bash
+
+services:
+  staffeli_nt:
+    container_name: staffeli_nt
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./staffeli_nt:/staffeli/staffeli_nt
+      #- ./SU2024:/staffeli/SU2024
+      #- ./PoP2024:/staffeli/PoP2024

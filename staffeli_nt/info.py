@@ -105,7 +105,7 @@ def distribute(bags, verbose=True, debug=False):
         for _ in range(handins-avg):
             unass_ass_stack.append(bags[key].pop())
         # will loop if bag has too few handins
-        for _ in range(avg-handins-1):
+        for _ in range(avg-handins):
             # We might pop from an empty stack, so we catch the exception and just redistribute further later
             try:
                 bags[key].append(unass_ass_stack.pop())
@@ -247,6 +247,22 @@ def get_section_info(course):
             print('%6s,' % kuid(student.email), student.name)
 
 
+def get_groups(course):
+    groups = course.get_groups()
+    print("Group Category ID, Group ID, Group Name")
+
+    for group in groups:
+        print(f"{group.group_category_id}, {group.id}, {group.name}")
+        members = group.get_users()
+        
+        #print(group.__dict__)
+        
+        i = 1
+        for member in members:
+            print(f"    Member {i}: {member.id} {member.name} {member.login_id}")
+            i += 1
+
+
 def print_usage(progname):
     print(f"Usage: ./{progname} COURSE_ID [Option]\n\tOptions:\n\t--help\t\t\t: Print this message\n\t--ids\t\t\t: Print kuids and names for a sections\n\t--get-ass-dist FNAME\t: Select an assignment and construct a distribution between available\n\t\t\t\t  TA's, resulting in a YAML-file suitable for using with\n\t\t\t\t  the --select-ta flag in staffeli/download.py.\n\t\t\t\t  The result will be written to FNAME.\n\t\t\t\t  The flag --debug will enable debug printing.\n\t\t\t\t  The flag --quiet will disable verbose output.")
 
@@ -304,6 +320,10 @@ if __name__ == '__main__':
     elif ("--ids" in sys.argv):
         course = get_course(course_id)
         get_section_info(course)
+
+    elif ("--groups" in sys.argv):
+        course = get_course(course_id)
+        get_groups(course)
 
     else:
         exit_error("Non-valid arguments.")

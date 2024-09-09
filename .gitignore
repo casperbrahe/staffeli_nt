@@ -1,3 +1,11 @@
+# course folders
+PoP2024/
+SU2024/
+
+# canvas token
+.canvas.token
+howto.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
